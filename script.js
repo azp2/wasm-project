@@ -104,13 +104,12 @@ if (window.elementSdk) {
   });
 }
 
-// Form submission handler (UPDATED FOR FORMSPREE)
+// Form submission handler (UPDATED with ALERT)
 document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   
   const form = this;
   const submitBtn = document.getElementById('submit-btn');
-  const successMessage = document.getElementById('success-message');
   
   // 1. إظهار حالة التحميل وحفظ النص الأصلي
   const originalBtnText = submitBtn.innerHTML;
@@ -127,7 +126,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
   const formData = new FormData(form);
 
   try {
-    // 🔴 هام: استبدل YOUR_FORM_ID بالرمز الخاص بك من Formspree
+    // 🔴 هام: تأكد أن رابط Formspree الخاص بك موجود هنا
     const response = await fetch("https://formspree.io/f/xnjzvqrk", {
       method: "POST",
       body: formData,
@@ -138,10 +137,15 @@ document.getElementById('contact-form').addEventListener('submit', async functio
 
     // 3. التحقق من نجاح الإرسال
     if (response.ok) {
-      // إخفاء النموذج وإظهار رسالة النجاح
-      form.style.display = 'none';
-      successMessage.classList.remove('hidden');
-      form.reset(); // تفريغ الخانات
+      // ✅ التعديل هنا: إظهار رسالة تنبيه واضحة بدلاً من إخفاء الفورم
+      alert("تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.");
+      
+      form.reset(); // تفريغ الخانات فقط
+      
+      // إعادة الزر لحالته الطبيعية
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnText;
+      
     } else {
       // في حال وجود خطأ من السيرفر
       alert("عذراً، حدث خطأ أثناء الإرسال. يرجى المحاولة لاحقاً.");

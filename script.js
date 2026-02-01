@@ -104,15 +104,16 @@ if (window.elementSdk) {
   });
 }
 
-// Form submission handler
-document.getElementById('contact-form').addEventListener('submit', function(e) {
+// Form submission handler (UPDATED FOR FORMSPREE)
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   
+  const form = this;
   const submitBtn = document.getElementById('submit-btn');
   const successMessage = document.getElementById('success-message');
-  const form = this;
   
-  // Show loading state
+  // 1. إظهار حالة التحميل وحفظ النص الأصلي
+  const originalBtnText = submitBtn.innerHTML;
   submitBtn.disabled = true;
   submitBtn.innerHTML = `
     <svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
@@ -121,12 +122,38 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     </svg>
     <span>جاري الإرسال...</span>
   `;
-  
-  // Simulate form submission
-  setTimeout(() => {
-    form.style.display = 'none';
-    successMessage.classList.remove('hidden');
-  }, 1500);
+
+  // 2. إعداد البيانات للإرسال
+  const formData = new FormData(form);
+
+  try {
+    // 🔴 هام: استبدل YOUR_FORM_ID بالرمز الخاص بك من Formspree
+    const response = await fetch("https://formspree.io/f/xnjzvqrk", {
+      method: "POST",
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    // 3. التحقق من نجاح الإرسال
+    if (response.ok) {
+      // إخفاء النموذج وإظهار رسالة النجاح
+      form.style.display = 'none';
+      successMessage.classList.remove('hidden');
+      form.reset(); // تفريغ الخانات
+    } else {
+      // في حال وجود خطأ من السيرفر
+      alert("عذراً، حدث خطأ أثناء الإرسال. يرجى المحاولة لاحقاً.");
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnText;
+    }
+  } catch (error) {
+    // في حال وجود خطأ في الاتصال بالإنترنت
+    alert("تأكد من اتصالك بالإنترنت وحاول مرة أخرى.");
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
+  }
 });
 
 // Smooth scroll for navigation links

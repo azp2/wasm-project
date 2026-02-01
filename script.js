@@ -1,4 +1,6 @@
-// Default configuration
+// ==========================================
+// 1. Default Configuration & SDK Setup
+// ==========================================
 const defaultConfig = {
   hero_title: 'نبرمج رؤيتك، نصمم واقعك الرقمي',
   hero_subtitle: 'حلول برمجية وتصاميم مخصصة تُبنى من الصفر، بلا قوالب جاهزة. جودة وكفاءة لا تُضاهى.',
@@ -11,7 +13,7 @@ const defaultConfig = {
   surface_color: '#0A1628'
 };
 
-// Initialize Element SDK
+// Initialize Element SDK (لإدارة النصوص والألوان ديناميكياً)
 if (window.elementSdk) {
   window.elementSdk.init({
     defaultConfig,
@@ -56,7 +58,7 @@ if (window.elementSdk) {
         contactEmail.textContent = config.contact_email || defaultConfig.contact_email;
       }
 
-      // Update colors
+      // Update colors variables
       const bgColor = config.background_color || defaultConfig.background_color;
       const accentColor = config.accent_color || defaultConfig.accent_color;
       const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
@@ -70,26 +72,11 @@ if (window.elementSdk) {
     },
     mapToCapabilities: (config) => ({
       recolorables: [
-        {
-          get: () => config.background_color || defaultConfig.background_color,
-          set: (value) => window.elementSdk.setConfig({ background_color: value })
-        },
-        {
-          get: () => config.surface_color || defaultConfig.surface_color,
-          set: (value) => window.elementSdk.setConfig({ surface_color: value })
-        },
-        {
-          get: () => config.text_color || defaultConfig.text_color,
-          set: (value) => window.elementSdk.setConfig({ text_color: value })
-        },
-        {
-          get: () => config.accent_color || defaultConfig.accent_color,
-          set: (value) => window.elementSdk.setConfig({ accent_color: value })
-        },
-        {
-          get: () => config.secondary_color || defaultConfig.secondary_color,
-          set: (value) => window.elementSdk.setConfig({ secondary_color: value })
-        }
+        { get: () => config.background_color || defaultConfig.background_color, set: (v) => window.elementSdk.setConfig({ background_color: v }) },
+        { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => window.elementSdk.setConfig({ surface_color: v }) },
+        { get: () => config.text_color || defaultConfig.text_color, set: (v) => window.elementSdk.setConfig({ text_color: v }) },
+        { get: () => config.accent_color || defaultConfig.accent_color, set: (v) => window.elementSdk.setConfig({ accent_color: v }) },
+        { get: () => config.secondary_color || defaultConfig.secondary_color, set: (v) => window.elementSdk.setConfig({ secondary_color: v }) }
       ],
       borderables: [],
       fontEditable: undefined,
@@ -104,14 +91,16 @@ if (window.elementSdk) {
   });
 }
 
-// Form submission handler (UPDATED with ALERT)
+// ==========================================
+// 2. Form Submission Handler (SweetAlert2)
+// ==========================================
 document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   
   const form = this;
   const submitBtn = document.getElementById('submit-btn');
   
-  // 1. إظهار حالة التحميل وحفظ النص الأصلي
+  // حفظ نص الزر الأصلي وإظهار أيقونة التحميل
   const originalBtnText = submitBtn.innerHTML;
   submitBtn.disabled = true;
   submitBtn.innerHTML = `
@@ -122,11 +111,10 @@ document.getElementById('contact-form').addEventListener('submit', async functio
     <span>جاري الإرسال...</span>
   `;
 
-  // 2. إعداد البيانات للإرسال
   const formData = new FormData(form);
 
   try {
-    // 🔴 هام: تأكد أن رابط Formspree الخاص بك موجود هنا
+    // 🔴🔴 هام: استبدل YOUR_FORM_ID برمزك من Formspree 🔴🔴
     const response = await fetch("https://formspree.io/f/xnjzvqrk", {
       method: "POST",
       body: formData,
@@ -135,32 +123,54 @@ document.getElementById('contact-form').addEventListener('submit', async functio
       }
     });
 
-    // 3. التحقق من نجاح الإرسال
     if (response.ok) {
-      // ✅ التعديل هنا: إظهار رسالة تنبيه واضحة بدلاً من إخفاء الفورم
-      alert("تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.");
+      // ✅ نجاح: عرض تنبيه فخم
+      Swal.fire({
+        title: 'تم الإرسال بنجاح!',
+        text: 'شكراً لتواصلك معنا، سنرد عليك في أقرب وقت.',
+        icon: 'success',
+        background: '#0A1628', // لون داكن يناسب الموقع
+        color: '#ffffff',      // نص أبيض
+        confirmButtonText: 'تم',
+        confirmButtonColor: '#00C7F4', // سماوي
+        backdrop: `rgba(5, 10, 31, 0.8)`
+      });
       
-      form.reset(); // تفريغ الخانات فقط
-      
-      // إعادة الزر لحالته الطبيعية
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalBtnText;
+      form.reset(); // تفريغ الحقول
       
     } else {
-      // في حال وجود خطأ من السيرفر
-      alert("عذراً، حدث خطأ أثناء الإرسال. يرجى المحاولة لاحقاً.");
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalBtnText;
+      // ❌ خطأ من السيرفر
+      Swal.fire({
+        title: 'عذراً!',
+        text: 'حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى.',
+        icon: 'error',
+        background: '#0A1628',
+        color: '#ffffff',
+        confirmButtonText: 'حسناً',
+        confirmButtonColor: '#2E00E6'
+      });
     }
   } catch (error) {
-    // في حال وجود خطأ في الاتصال بالإنترنت
-    alert("تأكد من اتصالك بالإنترنت وحاول مرة أخرى.");
+    // ⚠️ خطأ في الشبكة
+    Swal.fire({
+      title: 'تنبيه',
+      text: 'يرجى التأكد من اتصالك بالإنترنت.',
+      icon: 'warning',
+      background: '#0A1628',
+      color: '#ffffff',
+      confirmButtonText: 'حسناً',
+      confirmButtonColor: '#2E00E6'
+    });
+  } finally {
+    // إعادة الزر لوضعه الطبيعي في كل الحالات
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalBtnText;
   }
 });
 
-// Smooth scroll for navigation links
+// ==========================================
+// 3. Smooth Scroll Navigation
+// ==========================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
@@ -174,7 +184,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Navbar scroll effect
+// ==========================================
+// 4. Navbar Scroll Effect
+// ==========================================
 let lastScroll = 0;
 window.addEventListener('scroll', () => {
   const nav = document.querySelector('nav');

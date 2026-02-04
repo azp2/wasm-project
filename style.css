@@ -1,13 +1,17 @@
 @view-transition { navigation: auto; }
 
+/* =========================================
+   1. إعدادات الصفحة والخطوط (مشترك)
+   ========================================= */
 body {
   box-sizing: border-box;
-}
-
-* {
   font-family: 'Tajawal', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* =========================================
+   2. الوضع الداكن (الأساسي - لم يتم تغييره)
+   ========================================= */
 :root {
   --bg-primary: #050A1F;
   --accent-blue: #2E00E6;
@@ -15,24 +19,13 @@ body {
   --text-white: #FFFFFF;
 }
 
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-white);
+}
+
 .gradient-bg {
   background: linear-gradient(180deg, #050A1F 0%, #0A1628 50%, #050A1F 100%);
-}
-
-.glow-blue {
-  box-shadow: 0 0 30px rgba(46, 0, 230, 0.5), 0 0 60px rgba(46, 0, 230, 0.3);
-}
-
-.glow-turquoise {
-  box-shadow: 0 0 30px rgba(0, 199, 244, 0.5), 0 0 60px rgba(0, 199, 244, 0.3);
-}
-
-.text-glow-blue {
-  text-shadow: 0 0 20px rgba(46, 0, 230, 0.8), 0 0 40px rgba(46, 0, 230, 0.4);
-}
-
-.text-glow-turquoise {
-  text-shadow: 0 0 20px rgba(0, 199, 244, 0.8), 0 0 40px rgba(0, 199, 244, 0.4);
 }
 
 .circuit-pattern {
@@ -42,17 +35,20 @@ body {
   background-size: 50px 50px;
 }
 
+/* الكروت الزجاجية (Dark) */
 .card-glass {
   background: rgba(10, 22, 40, 0.6);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(0, 199, 244, 0.2);
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #2E00E6 0%, #4A1FFF 100%);
   transition: all 0.3s ease;
 }
 
+/* الأزرار */
+.btn-primary {
+  background: linear-gradient(135deg, #2E00E6 0%, #4A1FFF 100%);
+  color: #FFFFFF;
+  transition: all 0.3s ease;
+}
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 40px rgba(46, 0, 230, 0.5);
@@ -64,83 +60,177 @@ body {
   color: #00C7F4;
   transition: all 0.3s ease;
 }
-
 .btn-secondary:hover {
   background: rgba(0, 199, 244, 0.1);
   transform: translateY(-2px);
   box-shadow: 0 10px 40px rgba(0, 199, 244, 0.3);
 }
 
-.floating {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-.pulse-glow {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.8; }
-}
-
+/* هوفر الخدمات (Dark) */
 .service-card {
   transition: all 0.4s ease;
 }
-
 .service-card:hover {
   transform: translateY(-10px);
   border-color: rgba(0, 199, 244, 0.5);
   box-shadow: 0 20px 60px rgba(0, 199, 244, 0.2);
 }
 
+/* هوفر المشاريع (Dark) */
 .portfolio-card {
-  transition: all 0.4s ease;
+  position: relative;
   overflow: hidden;
+  transition: all 0.4s ease;
 }
-
+.portfolio-card .portfolio-overlay {
+  opacity: 0;
+  transition: all 0.3s ease;
+  background: linear-gradient(to top, rgba(5,10,31, 0.95), transparent);
+}
 .portfolio-card:hover {
   transform: scale(1.02);
+  border-color: #00C7F4;
 }
-
 .portfolio-card:hover .portfolio-overlay {
   opacity: 1;
 }
 
-.nav-link {
-  position: relative;
-  transition: color 0.3s ease;
-}
-
+/* الروابط */
+.nav-link { position: relative; transition: color 0.3s ease; }
 .nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  right: 0;
-  width: 0;
-  height: 2px;
-  background: #00C7F4;
-  transition: width 0.3s ease;
+  content: ''; position: absolute; bottom: -4px; right: 0; width: 0; height: 2px;
+  background: #00C7F4; transition: width 0.3s ease;
+}
+.nav-link:hover::after { width: 100%; }
+
+/* Animation Utils */
+.glow-blue { box-shadow: 0 0 30px rgba(46, 0, 230, 0.5), 0 0 60px rgba(46, 0, 230, 0.3); }
+.text-glow-turquoise { text-shadow: 0 0 20px rgba(0, 199, 244, 0.8), 0 0 40px rgba(0, 199, 244, 0.4); }
+.floating { animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+.pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
+@keyframes pulseGlow { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+.code-line { animation: codeFade 4s ease-in-out infinite; }
+@keyframes codeFade { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.6; } }
+.scroll-smooth { scroll-behavior: smooth; }
+
+
+/* =========================================
+   3. الوضع النهاري (Light Mode) - التعديل المطلوب ✅
+   ========================================= */
+
+/* الخلفية العامة */
+body.light-mode {
+    background-color: #F3F4F6 !important; /* رمادي فاتح جداً للخلفية */
+    background-image: none !important;
+    color: #111827 !important; /* نص كحلي */
 }
 
-.nav-link:hover::after {
-  width: 100%;
+/* تنظيف الخلفيات الداكنة */
+body.light-mode .gradient-bg,
+body.light-mode section,
+body.light-mode main,
+body.light-mode div[class*="bg-[#050A1F]"] {
+    background: #F3F4F6 !important;
+    background-image: none !important;
 }
 
-.code-line {
-  animation: codeFade 4s ease-in-out infinite;
+/* الناف بار */
+body.light-mode nav {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-bottom: 1px solid #E5E7EB !important;
+}
+body.light-mode .nav-link,
+body.light-mode nav a:not(.btn-primary) {
+    color: #111827 !important;
 }
 
-@keyframes codeFade {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.6; }
+/* =========================================================
+   🔴 توحيد لون البوكسات (طلبك: نفس لون "لماذا نحن")
+   ========================================================= */
+body.light-mode .card-glass,
+body.light-mode .service-card,
+body.light-mode .portfolio-card,
+body.light-mode .service-card,
+body.light-mode input,
+body.light-mode textarea {
+    background: #edfaff !important; /* أبيض نقي لجميع البوكسات */
+    border: 1px solid #E5E7EB !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
 }
 
-.scroll-smooth {
-  scroll-behavior: smooth;
+/* =========================================================
+   🔴 تحديد الهوفر (فقط للعناصر المطلوبة: زر، خدمات، مشاريع)
+   ========================================================= */
+
+/* 1. هوفر الخدمات (ماذا نقدم) - نفس حركة الداكن */
+body.light-mode .service-card:hover {
+    transform: translateY(-10px) !important;
+    border-color: #00C7F4 !important; /* سماوي */
+    box-shadow: 0 20px 40px -5px rgba(46, 0, 230, 0.15) !important; /* ظل أزرق */
+    background: #FFFFFF !important;
+}
+
+/* 2. هوفر المشاريع (أعمالنا) - نفس حركة الداكن */
+body.light-mode .portfolio-card:hover {
+    transform: scale(1.02) !important;
+    border-color: #00C7F4 !important;
+}
+/* إصلاح نص المشاريع في اللايت مود */
+body.light-mode .portfolio-overlay h4,
+body.light-mode .portfolio-overlay span {
+    color: #FFFFFF !important; /* النص فوق الصورة يبقى أبيض */
+}
+body.light-mode .portfolio-card .p-6 h3 { color: #111827 !important; }
+body.light-mode .portfolio-card .p-6 p { color: #4B5563 !important; }
+
+/* 3. هوفر زر الإرسال (Submit Button) */
+body.light-mode #submit-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 40px rgba(46, 0, 230, 0.5) !important;
+}
+
+/* 4. إلغاء الهوفر عن الباقي (مثل بوكسات التواصل ولماذا نحن) */
+body.light-mode .card-glass:not(.service-card):not(.portfolio-card):hover {
+    transform: none !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+    border-color: #E5E7EB !important;
+}
+
+/* =========================================================
+   تنسيقات النصوص والأيقونات في اللايت مود
+   ========================================================= */
+body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode p, body.light-mode span, body.light-mode li {
+    color: #111827 !important;
+}
+body.light-mode .text-cyan-400 { color: #0084A1 !important; }
+body.light-mode .text-blue-500 { color: #2563EB !important; }
+body.light-mode .text-purple-500 { color: #9333EA !important; }
+body.light-mode .text-gray-300, body.light-mode .text-gray-400, body.light-mode .text-gray-500 {
+    color: #4B5563 !important;
+}
+body.light-mode input, body.light-mode textarea {
+    color: #111827 !important;
+}
+body.light-mode ::placeholder {
+    color: #9CA3AF !important;
+}
+body.light-mode .code-line {
+    color: #f9f6f6 !important;
+    opacity: 0.05 !important;
+}
+body.light-mode .circuit-pattern {
+    background-image: linear-gradient(#E5E7EB 1px, transparent 1px), linear-gradient(90deg, #E5E7EB 1px, transparent 1px) !important;
+    opacity: 0.5 !important;
+}
+/* أيقونات السوشيال ميديا */
+body.light-mode a[href*="tiktok"] svg,
+body.light-mode a[href*="twitter"] svg,
+body.light-mode a[href*="linkedin"] svg,
+body.light-mode .fab {
+    color: #ffffff !important;
+}
+body.light-mode a[href*="tiktok"]:hover svg,
+body.light-mode a[href*="twitter"]:hover svg {
+    color: #FFFFFF !important;
 }

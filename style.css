@@ -10,7 +10,7 @@ body {
 }
 
 /* =========================================
-   2. الوضع الداكن (الأساسي - لم يتم تغييره)
+   2. الوضع الداكن (الأساسي - Dark Mode)
    ========================================= */
 :root {
   --bg-primary: #050A1F;
@@ -116,121 +116,137 @@ body {
 
 
 /* =========================================
-   3. الوضع النهاري (Light Mode) - التعديل المطلوب ✅
+   3. الوضع النهاري (Light Mode) - (Final)
    ========================================= */
 
 /* الخلفية العامة */
 body.light-mode {
-    background-color: #F3F4F6 !important; /* رمادي فاتح جداً للخلفية */
+    background: linear-gradient(180deg, #FFFFFF 0%, #F3F4F6 50%, #E5E7EB 100%) !important;
     background-image: none !important;
-    color: #111827 !important; /* نص كحلي */
+    color: #111827 !important;
 }
 
 /* تنظيف الخلفيات الداكنة */
-body.light-mode .gradient-bg,
 body.light-mode section,
 body.light-mode main,
 body.light-mode div[class*="bg-[#050A1F]"] {
-    background: #F3F4F6 !important;
+    background: transparent !important;
     background-image: none !important;
 }
 
 /* الناف بار */
 body.light-mode nav {
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    border-bottom: 1px solid #E5E7EB !important;
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
 }
 body.light-mode .nav-link,
 body.light-mode nav a:not(.btn-primary) {
-    color: #111827 !important;
+    color: #1f2937 !important;
+    font-weight: 500 !important;
+}
+body.light-mode .nav-link:hover {
+    color: #0084A1 !important;
 }
 
-/* =========================================================
-   🔴 توحيد لون البوكسات (طلبك: نفس لون "لماذا نحن")
-   ========================================================= */
+/* الأكواد العائمة والزخارف */
+body.light-mode .code-line {
+    color: #1e40af !important;
+    opacity: 0.3 !important;
+    font-weight: 700 !important;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.05) !important;
+}
+
+body.light-mode .circuit-pattern {
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px) !important;
+    opacity: 1 !important;
+}
+
+/* ألوان النصوص الرئيسية */
+body.light-mode .text-cyan-400, 
+body.light-mode .text-cyan-500 { color: #0084A1 !important; }
+body.light-mode .text-blue-400,
+body.light-mode .text-blue-500,
+body.light-mode .text-blue-600 { color: #1e40af !important; }
+body.light-mode .text-purple-500 { color: #7e22ce !important; }
+body.light-mode .text-gray-300, 
+body.light-mode .text-gray-400, 
+body.light-mode .text-gray-500 { color: #4b5563 !important; }
+
+/* توحيد الكروت والبوكسات */
 body.light-mode .card-glass,
 body.light-mode .service-card,
 body.light-mode .portfolio-card,
-body.light-mode .service-card,
 body.light-mode input,
 body.light-mode textarea {
-    background: #edfaff !important; /* أبيض نقي لجميع البوكسات */
-    border: 1px solid #E5E7EB !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05) !important;
 }
 
 /* =========================================================
-   🔴 تحديد الهوفر (فقط للعناصر المطلوبة: زر، خدمات، مشاريع)
+   🟢 4. إصلاح حاوية الكود في قسم "من نحن" (Code Container Fix)
    ========================================================= */
 
-/* 1. هوفر الخدمات (ماذا نقدم) - نفس حركة الداكن */
-body.light-mode .service-card:hover {
-    transform: translateY(-10px) !important;
-    border-color: #00C7F4 !important; /* سماوي */
-    box-shadow: 0 20px 40px -5px rgba(46, 0, 230, 0.15) !important; /* ظل أزرق */
-    background: #FFFFFF !important;
+/* استهداف الصندوق الداخلي للكود وتثبيت حجمه ومظهره */
+body.light-mode #about .card-glass .rounded-xl.font-mono {
+    background-color: #f1f5f9 !important; /* خلفية رمادية فاتحة (Slate-100) لتميز الصندوق */
+    border: 1px solid #cbd5e1 !important; /* حدود واضحة للحفاظ على الحجم */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05) !important; /* ظل داخلي خفيف */
+    color: #334155 !important; /* لون النص الأساسي */
+    /* تثبيت الأبعاد */
+    display: block !important;
+    width: 100% !important;
 }
 
-/* 2. هوفر المشاريع (أعمالنا) - نفس حركة الداكن */
+/* تعديل ألوان الـ Syntax Highlighting داخل الكود لتكون واضحة */
+body.light-mode #about code .text-purple-400 { color: #9333ea !important; font-weight: bold; } /* const */
+body.light-mode #about code .text-cyan-400   { color: #0891b2 !important; font-weight: bold; } /* wasm */
+body.light-mode #about code .text-green-400  { color: #166534 !important; } /* Keys (quality, etc) */
+body.light-mode #about code .text-yellow-400 { color: #b45309 !important; } /* Strings ("exceptional") */
+body.light-mode #about code .text-red-400    { color: #dc2626 !important; } /* false */
+body.light-mode #about code .text-blue-400   { color: #2563eb !important; } /* true */
+body.light-mode #about code .text-gray-300   { color: #475569 !important; } /* { } : , */
+
+
+/* =========================================================
+   تأثيرات الهوفر (Hover)
+   ========================================================= */
+body.light-mode .service-card:hover,
 body.light-mode .portfolio-card:hover {
-    transform: scale(1.02) !important;
-    border-color: #00C7F4 !important;
+    transform: translateY(-5px) !important;
+    border-color: #0084A1 !important;
+    box-shadow: 0 15px 30px -5px rgba(0, 132, 161, 0.15) !important;
+    background: #f8fafc !important;
 }
-/* إصلاح نص المشاريع في اللايت مود */
-body.light-mode .portfolio-overlay h4,
-body.light-mode .portfolio-overlay span {
-    color: #FFFFFF !important; /* النص فوق الصورة يبقى أبيض */
+
+body.light-mode #submit-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 40px rgba(46, 0, 230, 0.25) !important;
 }
+
+/* نصوص داخل كروت المشاريع */
 body.light-mode .portfolio-card .p-6 h3 { color: #111827 !important; }
 body.light-mode .portfolio-card .p-6 p { color: #4B5563 !important; }
 
-/* 3. هوفر زر الإرسال (Submit Button) */
-body.light-mode #submit-btn:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 10px 40px rgba(46, 0, 230, 0.5) !important;
-}
-
-/* 4. إلغاء الهوفر عن الباقي (مثل بوكسات التواصل ولماذا نحن) */
-body.light-mode .card-glass:not(.service-card):not(.portfolio-card):hover {
-    transform: none !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
-    border-color: #E5E7EB !important;
-}
-
-/* =========================================================
-   تنسيقات النصوص والأيقونات في اللايت مود
-   ========================================================= */
-body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode p, body.light-mode span, body.light-mode li {
+/* إصلاحات النصوص العامة والإدخال */
+body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode h4 {
     color: #111827 !important;
 }
-body.light-mode .text-cyan-400 { color: #0084A1 !important; }
-body.light-mode .text-blue-500 { color: #2563EB !important; }
-body.light-mode .text-purple-500 { color: #9333EA !important; }
-body.light-mode .text-gray-300, body.light-mode .text-gray-400, body.light-mode .text-gray-500 {
-    color: #4B5563 !important;
-}
+
 body.light-mode input, body.light-mode textarea {
     color: #111827 !important;
+    background-color: #f9fafb !important;
 }
 body.light-mode ::placeholder {
-    color: #9CA3AF !important;
+    color: #9ca3af !important;
 }
-body.light-mode .code-line {
-    color: #f9f6f6 !important;
-    opacity: 0.05 !important;
-}
-body.light-mode .circuit-pattern {
-    background-image: linear-gradient(#E5E7EB 1px, transparent 1px), linear-gradient(90deg, #E5E7EB 1px, transparent 1px) !important;
-    opacity: 0.5 !important;
-}
+
 /* أيقونات السوشيال ميديا */
 body.light-mode a[href*="tiktok"] svg,
 body.light-mode a[href*="twitter"] svg,
-body.light-mode a[href*="linkedin"] svg,
-body.light-mode .fab {
+body.light-mode a[href*="linkedin"] svg {
     color: #ffffff !important;
-}
-body.light-mode a[href*="tiktok"]:hover svg,
-body.light-mode a[href*="twitter"]:hover svg {
-    color: #FFFFFF !important;
 }

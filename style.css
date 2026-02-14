@@ -10,7 +10,7 @@ body {
 }
 
 /* =========================================
-   2. الوضع الداكن (الأساسي - Dark Mode)
+   2. الوضع الداكن (الأساسي)
    ========================================= */
 :root {
   --bg-primary: #050A1F;
@@ -76,24 +76,68 @@ body {
   box-shadow: 0 20px 60px rgba(0, 199, 244, 0.2);
 }
 
-/* هوفر المشاريع (Dark) */
+/* =========================================================
+   🚨 الحل الجذري لطول الكروت (Portfolio Cards) 🚨
+   ========================================================= */
+
+/* جعل حاوية المشاريع تستخدم Grid وتساوي ارتفاع العناصر */
+#portfolio-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    #portfolio-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* تصميم الكارت ليكون مرناً ويمتد لكامل الارتفاع */
 .portfolio-card {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;       /* يملأ ارتفاع الخلية في الـ Grid */
+    min-height: 450px;  /* 🟢 تحديد حد أدنى للارتفاع لضمان الحجم الكبير */
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
 }
-.portfolio-card .portfolio-overlay {
-  opacity: 0;
-  transition: all 0.3s ease;
-  background: linear-gradient(to top, rgba(5,10,31, 0.95), transparent);
-}
+
 .portfolio-card:hover {
-  transform: scale(1.02);
-  border-color: #00C7F4;
+    transform: translateY(-5px);
+    border-color: #0084A1;
+    box-shadow: 0 15px 30px -5px rgba(0, 132, 161, 0.15);
 }
-.portfolio-card:hover .portfolio-overlay {
-  opacity: 1;
+
+/* تغليف الصورة بارتفاع ثابت */
+.portfolio-image-wrapper {
+    height: 250px;      /* ارتفاع ثابت للصورة */
+    flex-shrink: 0;     /* منع الصورة من الانكماش */
+    position: relative;
+    background-color: #111827;
+    overflow: hidden;
 }
+
+.portfolio-image-wrapper img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.portfolio-card:hover .portfolio-image-wrapper img {
+    transform: scale(1.1);
+}
+
+/* منطقة المحتوى: تتمدد لتملأ أي فراغ متبقي */
+.portfolio-content {
+    flex: 1;            /* ينمو ليملأ المساحة المتبقية */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* توزيع المحتوى (العنوان فوق، والتقنيات تحت) */
+    padding: 1.5rem;    /* p-6 */
+}
+
 
 /* الروابط */
 .nav-link { position: relative; transition: color 0.3s ease; }
@@ -116,7 +160,7 @@ body {
 
 
 /* =========================================
-   3. الوضع النهاري (Light Mode) - (Final)
+   3. الوضع النهاري (Light Mode)
    ========================================= */
 
 /* الخلفية العامة */
@@ -185,41 +229,38 @@ body.light-mode textarea {
     border: 1px solid #e5e7eb !important;
     box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05) !important;
 }
-/* =========================================
-   إصلاح عنوان الهيرو (نصمم واقعك الرقمي)
-   ========================================= */
+/* إصلاح عنوان الهيرو */
 body.light-mode #hero-title .text-white {
-    color: #111827 !important; /* تحويل اللون إلى كحلي غامق في الوضع النهاري */
+    color: #111827 !important;
 }
-/* =========================================================
-   🟢 4. إصلاح حاوية الكود في قسم "من نحن" (Code Container Fix)
-   ========================================================= */
 
-/* استهداف الصندوق الداخلي للكود وتثبيت حجمه ومظهره */
+/* إصلاح حاوية الكود في قسم "من نحن" */
 body.light-mode #about .card-glass .rounded-xl.font-mono {
-    background-color: #f1f5f9 !important; /* خلفية رمادية فاتحة (Slate-100) لتميز الصندوق */
-    border: 1px solid #cbd5e1 !important; /* حدود واضحة للحفاظ على الحجم */
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05) !important; /* ظل داخلي خفيف */
-    color: #334155 !important; /* لون النص الأساسي */
-    /* تثبيت الأبعاد */
+    background-color: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05) !important;
+    color: #334155 !important;
     display: block !important;
     width: 100% !important;
 }
 
-/* تعديل ألوان الـ Syntax Highlighting داخل الكود لتكون واضحة */
-body.light-mode #about code .text-purple-400 { color: #9333ea !important; font-weight: bold; } /* const */
-body.light-mode #about code .text-cyan-400   { color: #0891b2 !important; font-weight: bold; } /* wasm */
-body.light-mode #about code .text-green-400  { color: #166534 !important; } /* Keys (quality, etc) */
-body.light-mode #about code .text-yellow-400 { color: #b45309 !important; } /* Strings ("exceptional") */
-body.light-mode #about code .text-red-400    { color: #dc2626 !important; } /* false */
-body.light-mode #about code .text-blue-400   { color: #2563eb !important; } /* true */
-body.light-mode #about code .text-gray-300   { color: #475569 !important; } /* { } : , */
+/* تعديل ألوان الـ Syntax Highlighting */
+body.light-mode #about code .text-purple-400 { color: #9333ea !important; font-weight: bold; }
+body.light-mode #about code .text-cyan-400   { color: #0891b2 !important; font-weight: bold; }
+body.light-mode #about code .text-green-400  { color: #166534 !important; }
+body.light-mode #about code .text-yellow-400 { color: #b45309 !important; }
+body.light-mode #about code .text-red-400    { color: #dc2626 !important; }
+body.light-mode #about code .text-blue-400   { color: #2563eb !important; }
+body.light-mode #about code .text-gray-300   { color: #475569 !important; }
 
+/* تأثيرات الهوفر (Hover) */
+body.light-mode .service-card:hover {
+    transform: translateY(-5px) !important;
+    border-color: #0084A1 !important;
+    box-shadow: 0 15px 30px -5px rgba(0, 132, 161, 0.15) !important;
+    background: #f8fafc !important;
+}
 
-/* =========================================================
-   تأثيرات الهوفر (Hover)
-   ========================================================= */
-body.light-mode .service-card:hover,
 body.light-mode .portfolio-card:hover {
     transform: translateY(-5px) !important;
     border-color: #0084A1 !important;
@@ -236,7 +277,7 @@ body.light-mode #submit-btn:hover {
 body.light-mode .portfolio-card .p-6 h3 { color: #111827 !important; }
 body.light-mode .portfolio-card .p-6 p { color: #4B5563 !important; }
 
-/* إصلاحات النصوص العامة والإدخال */
+/* إصلاحات النصوص العامة */
 body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode h4 {
     color: #111827 !important;
 }

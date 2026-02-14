@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وسم | لوحة القيادة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #050A1F; color: #ffffff; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0A1628; }
+        ::-webkit-scrollbar-thumb { background: #1e40af; border-radius: 4px; }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+        }
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(6, 182, 212, 0.1) 0%, transparent 100%);
+            border-right: 3px solid #06b6d4;
+            color: #22d3ee;
+        }
+        /* Status Badges for Messages */
+        .msg-status-new { @apply bg-red-500/20 text-red-400 border border-red-500/30; }
+        .msg-status-done { @apply bg-green-500/20 text-green-400 border border-green-500/30; }
+    </style>
+</head>
+<body class="h-screen overflow-hidden flex">
+
+    <aside class="w-64 bg-[#020617] border-l border-gray-800 flex flex-col shadow-2xl z-20">
+        <div class="p-6 flex items-center gap-3 border-b border-gray-800">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600"></div>
+            <h1 class="text-2xl font-bold tracking-wider">وسم <span class="text-cyan-400 text-xs block font-normal">لوحة التحكم</span></h1>
+        </div>
+        
+        <nav class="flex-1 py-6 space-y-2">
+            <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-item active w-full text-right px-6 py-3 text-gray-400 hover:text-white hover:bg-white/5 transition flex items-center gap-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                لوحة القيادة
+            </button>
+            <button onclick="switchTab('manage-projects')" id="nav-manage-projects" class="nav-item w-full text-right px-6 py-3 text-gray-400 hover:text-white hover:bg-white/5 transition flex items-center gap-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                إدارة المشاريع
+            </button>
+            <button onclick="switchTab('messages')" id="nav-messages" class="nav-item w-full text-right px-6 py-3 text-gray-400 hover:text-white hover:bg-white/5 transition flex items-center gap-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                الرسائل والطلبات
+            </button>
+            <button onclick="switchTab('add-project')" id="nav-add-project" class="nav-item w-full text-right px-6 py-3 text-gray-400 hover:text-white hover:bg-white/5 transition flex items-center gap-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                إضافة مشروع جديد
+            </button>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800">
+            <a href="index.html" class="flex items-center gap-2 text-sm text-gray-500 hover:text-cyan-400 transition justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                العودة للموقع
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto relative bg-[#050A1F] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]">
+        
+        <div id="tab-dashboard" class="p-8 space-y-8">
+            <h2 class="text-3xl font-bold mb-6">نظرة عامة</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="glass-panel p-6 rounded-2xl relative overflow-hidden group">
+                    <h3 class="text-gray-400 font-medium mb-2 text-sm">إجمالي المشاريع</h3>
+                    <div class="flex items-end justify-between">
+                        <span id="stat-total-projects" class="text-3xl font-bold text-white">...</span>
+                        <div class="p-2 bg-blue-500/10 rounded-lg text-blue-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg></div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl relative overflow-hidden group">
+                    <h3 class="text-gray-400 font-medium mb-2 text-sm">قيد العمل</h3>
+                    <div class="flex items-end justify-between">
+                        <span id="stat-progress-projects" class="text-3xl font-bold text-yellow-400">...</span>
+                        <div class="p-2 bg-yellow-500/10 rounded-lg text-yellow-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl relative overflow-hidden group">
+                    <h3 class="text-gray-400 font-medium mb-2 text-sm">مشاريع مكتملة</h3>
+                    <div class="flex items-end justify-between">
+                        <span id="stat-completed-projects" class="text-3xl font-bold text-green-400">...</span>
+                        <div class="p-2 bg-green-500/10 rounded-lg text-green-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl relative overflow-hidden group">
+                    <h3 class="text-gray-400 font-medium mb-2 text-sm">الرسائل الجديدة</h3>
+                    <div class="flex items-end justify-between">
+                        <span id="stat-new-messages" class="text-3xl font-bold text-red-400">...</span>
+                        <div class="p-2 bg-red-500/10 rounded-lg text-red-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <h3 class="text-xl font-bold mb-4 flex justify-between items-center">
+                    المشاريع قيد التنفيذ حالياً
+                    <button onclick="switchTab('manage-projects')" class="text-sm text-cyan-400 hover:underline">عرض الكل</button>
+                </h3>
+                <div class="glass-panel rounded-xl overflow-hidden">
+                    <table class="w-full text-right">
+                        <thead class="bg-gray-900/50 text-gray-400 text-sm">
+                            <tr>
+                                <th class="p-4">المشروع</th>
+                                <th class="p-4">التصنيف</th>
+                                <th class="p-4">الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboard-active-projects" class="text-sm text-gray-300 divide-y divide-gray-800">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-manage-projects" class="p-8 space-y-6 hidden">
+            <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-bold">إدارة المشاريع</h2>
+                <button onclick="switchTab('add-project')" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg text-sm transition flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    إضافة جديد
+                </button>
+            </div>
+            
+            <div class="glass-panel rounded-xl overflow-hidden min-h-[500px]">
+                <table class="w-full text-right">
+                    <thead class="bg-gray-900/50 text-gray-400 text-sm">
+                        <tr>
+                            <th class="p-4 w-16">صورة</th>
+                            <th class="p-4">اسم المشروع</th>
+                            <th class="p-4">التصنيف</th>
+                            <th class="p-4">الحالة</th>
+                            <th class="p-4 w-16">إجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projects-table-body" class="text-sm text-gray-300 divide-y divide-gray-800">
+                        <tr><td colspan="5" class="p-8 text-center text-gray-500">جاري تحميل المشاريع...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-messages" class="p-8 space-y-6 hidden">
+            <h2 class="text-3xl font-bold mb-6">صندوق الوارد</h2>
+            <div class="glass-panel rounded-xl overflow-hidden min-h-[500px]">
+                <table class="w-full text-right">
+                    <thead class="bg-gray-900/50 text-gray-400 text-sm">
+                        <tr>
+                            <th class="p-4 w-1/4">المرسل</th>
+                            <th class="p-4 w-1/2">مقتطف من الرسالة</th>
+                            <th class="p-4 w-1/12">الحالة</th>
+                            <th class="p-4 w-1/12">التاريخ</th>
+                            <th class="p-4 w-1/6">إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-messages-table" class="text-sm text-gray-300 divide-y divide-gray-800">
+                        <tr><td colspan="5" class="p-8 text-center text-gray-500">جاري تحميل الرسائل...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-add-project" class="p-8 hidden flex justify-center">
+            <div class="w-full max-w-3xl glass-panel p-8 rounded-3xl">
+                <h2 class="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-l from-cyan-400 to-blue-600">إضافة مشروع جديد</h2>
+                <form id="add-project-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">عنوان المشروع *</label>
+                            <input type="text" id="p-title" required class="w-full p-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:border-cyan-500 outline-none text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">التصنيف *</label>
+                            <input type="text" id="p-category" required class="w-full p-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:border-cyan-500 outline-none text-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">وصف المشروع *</label>
+                        <textarea id="p-description" required rows="3" class="w-full p-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:border-cyan-500 outline-none text-white"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">حالة المشروع الأولية</label>
+                        <select id="p-status" class="w-full p-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:border-cyan-500 outline-none text-white">
+                            <option value="in-progress">🟡 قيد العمل (In Progress)</option>
+                            <option value="completed">🟢 مكتمل (Completed)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">صورة المشروع *</label>
+                        <div class="relative border-2 border-dashed border-gray-600 rounded-lg p-6 hover:border-cyan-500 transition-colors text-center cursor-pointer" onclick="document.getElementById('p-image-file').click()">
+                            <input type="file" id="p-image-file" accept="image/*" class="hidden" onchange="previewImage(this)">
+                            <div id="upload-placeholder">
+                                <p class="text-sm text-gray-400">اضغط لرفع صورة</p>
+                            </div>
+                            <img id="image-preview" class="hidden w-full h-48 object-cover rounded-lg mt-2 mx-auto">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">التقنيات</label>
+                        <div id="tech-container" class="grid grid-cols-2 md:grid-cols-3 gap-2 h-32 overflow-y-auto pr-2 custom-scroll"></div>
+                    </div>
+                    <button type="submit" id="submit-project-btn" class="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl font-bold text-white hover:scale-[1.01] transition">🚀 إضافة المشروع</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="message-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-[#0A1628] w-full max-w-2xl rounded-2xl border border-gray-700 shadow-2xl overflow-hidden transform transition-all scale-100">
+            <div class="p-6 border-b border-gray-700 flex justify-between items-center bg-gray-900/50">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    تفاصيل الرسالة
+                </h3>
+                <button onclick="closeMessageModal()" class="text-gray-400 hover:text-white transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-8 space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="text-gray-500 text-sm block mb-1">اسم المرسل</label>
+                        <div id="modal-name" class="text-white font-bold text-lg border-b border-gray-700 pb-2"></div>
+                    </div>
+                    <div>
+                        <label class="text-gray-500 text-sm block mb-1">البريد الإلكتروني</label>
+                        <div id="modal-email" class="text-cyan-400 font-mono text-lg border-b border-gray-700 pb-2"></div>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-gray-500 text-sm block mb-1">تاريخ الإرسال</label>
+                    <div id="modal-date" class="text-gray-300 text-sm"></div>
+                </div>
+                <div>
+                    <label class="text-gray-500 text-sm block mb-2">نص الرسالة / الطلب</label>
+                    <div id="modal-message" class="bg-gray-900/50 p-4 rounded-xl text-gray-300 leading-relaxed border border-gray-700 min-h-[120px]"></div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-gray-700 bg-gray-900/30 flex justify-end gap-3">
+                <button onclick="closeMessageModal()" class="px-4 py-2 text-gray-300 hover:bg-white/10 rounded-lg transition">إغلاق</button>
+                <div id="modal-actions"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="admin.js"></script>
+
+    <script>
+        function switchTab(tabId) {
+            ['dashboard', 'messages', 'add-project', 'manage-projects'].forEach(id => {
+                document.getElementById(`tab-${id}`).classList.add('hidden');
+                document.getElementById(`nav-${id}`).classList.remove('active');
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`nav-${tabId}`).classList.add('active');
+            if(window.refreshDashboard) window.refreshDashboard();
+        }
+
+        function previewImage(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('upload-placeholder').classList.add('hidden');
+                    const img = document.getElementById('image-preview');
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function closeMessageModal() {
+            document.getElementById('message-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

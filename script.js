@@ -1,248 +1,211 @@
 // ==========================================
-// 1. Configuration & Theme Setup
+// 1. Firebase Imports & Config
 // ==========================================
+import { getFirestore, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 
-// إعدادات الوضع الداكن (الافتراضي)
-const darkConfig = {
-  background_color: '#050A1F',
-  surface_color: '#0A1628',
-  text_color: '#FFFFFF',
-  accent_color: '#2E00E6',
-  secondary_color: '#00C7F4'
+// 🔴 إعدادات فايربيس الخاصة بك
+const firebaseConfig = {
+  apiKey: "AIzaSyAsmDMYh3h_x66URxC55YaMUTW6tXP8G2Q",
+  authDomain: "wasm-portfolio.firebaseapp.com",
+  projectId: "wasm-portfolio",
+  storageBucket: "wasm-portfolio.firebasestorage.app",
+  messagingSenderId: "26049970214",
+  appId: "1:26049970214:web:05a9b80b186bdb64c526e7"
 };
 
-// إعدادات الوضع الفاتح
-const lightConfig = {
-  background_color: '#F3F4F6', // رمادي فاتح جداً للخلفية
-  surface_color: '#FFFFFF',    // أبيض للكروت
-  text_color: '#111827',       // كحلي غامق للنصوص
-  accent_color: '#2E00E6',
-  secondary_color: '#0099BD'   // سيان أغمق قليلاً للتباين
-};
+// تهيئة فايربيس
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// النصوص الثابتة
-const textConfig = {
-  hero_title: 'نبرمج رؤيتك، نصمم واقعك الرقمي',
-  hero_subtitle: 'حلول برمجية وتصاميم مخصصة تُبنى من الصفر، بلا قوالب جاهزة. جودة وكفاءة لا تُضاهى.',
-  about_title: 'نحن وسم.. مهندسو الأثر الرقمي',
-  contact_email: 'info@wasm.tech'
-};
-
-// دمج الإعدادات
-let currentConfig = { ...textConfig, ...darkConfig };
-
-// متغير لتتبع حالة الثيم
-let isDarkMode = true; 
-
-// تعريف عناصر DOM الخاصة بالثيم
+// ==========================================
+// 2. Theme & UI Logic
+// ==========================================
 const themeToggleBtn = document.getElementById('theme-toggle');
 const sunIcon = document.getElementById('sun-icon');
 const moonIcon = document.getElementById('moon-icon');
 const body = document.body;
+let isDarkMode = true;
 
-// دالة تطبيق الثيم
-function applyTheme(isDark) {
-  isDarkMode = isDark;
-  const colors = isDark ? darkConfig : lightConfig;
-  
-  // تحديث متغيرات CSS
-  document.documentElement.style.setProperty('--bg-primary', colors.background_color);
-  document.documentElement.style.setProperty('--surface-color', colors.surface_color);
-  document.documentElement.style.setProperty('--text-white', colors.text_color);
-  document.documentElement.style.setProperty('--accent-blue', colors.accent_color);
-  document.documentElement.style.setProperty('--accent-turquoise', colors.secondary_color);
-
-  // تحديث الكلاسات والأيقونات
-  if (isDark) {
-    body.classList.remove('light-mode');
-    if(sunIcon && moonIcon) {
-      sunIcon.classList.remove('hidden');
-      moonIcon.classList.add('hidden');
-    }
-  } else {
+// التحقق من الذاكرة
+if (localStorage.getItem('theme') === 'light') {
+    isDarkMode = false;
     body.classList.add('light-mode');
-    if(sunIcon && moonIcon) {
-      sunIcon.classList.add('hidden');
-      moonIcon.classList.remove('hidden');
-    }
-  }
-
-  // تحديث SDK إذا وجد
-  if (window.elementSdk) {
-    window.elementSdk.setConfig(colors);
-  }
+    toggleIcons();
 }
 
-// التحقق من الذاكرة عند التحميل
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'light') {
-  applyTheme(false);
-} else {
-  applyTheme(true);
-}
-
-// تفعيل زر التبديل
 if (themeToggleBtn) {
-  themeToggleBtn.addEventListener('click', () => {
-    const newStatus = !isDarkMode;
-    applyTheme(newStatus);
-    localStorage.setItem('theme', newStatus ? 'dark' : 'light');
-  });
-}
-
-// ==========================================
-// 2. Element SDK Initialization
-// ==========================================
-if (window.elementSdk) {
-  window.elementSdk.init({
-    defaultConfig: currentConfig,
-    onConfigChange: async (config) => {
-      // Update hero title
-      const heroTitle = document.getElementById('hero-title');
-      if (heroTitle) {
-        const titleParts = (config.hero_title || textConfig.hero_title).split('،');
-        heroTitle.innerHTML = `
-          <span class="bg-gradient-to-l from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent text-glow-turquoise">
-            ${titleParts[0]}${titleParts.length > 1 ? '،' : ''}
-          </span>
-          <br>
-          <span class="${isDarkMode ? 'text-white' : 'text-gray-900'}">${titleParts[1] || ''}</span>
-        `;
-      }
-
-      // Update hero subtitle
-      const heroSubtitle = document.getElementById('hero-subtitle');
-      if (heroSubtitle) {
-        const subtitleText = config.hero_subtitle || textConfig.hero_subtitle;
-        heroSubtitle.innerHTML = `
-          ${subtitleText.split('.')[0]}.
-          <br class="hidden md:block">
-          <span class="text-cyan-400">${subtitleText.split('.')[1] || ''}</span>
-        `;
-      }
-
-      // Update about title
-      const aboutTitle = document.getElementById('about-title');
-      if (aboutTitle) {
-        const title = config.about_title || textConfig.about_title;
-        aboutTitle.innerHTML = `
-          نحن <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent">وسم</span>..
-          <br>مهندسو الأثر الرقمي
-        `;
-      }
-
-      // Update contact email
-      const contactEmail = document.getElementById('contact-email');
-      if (contactEmail) {
-        contactEmail.textContent = config.contact_email || textConfig.contact_email;
-      }
-    },
-    // (باقي إعدادات SDK للتحرير - اختيارية)
-    mapToCapabilities: (config) => ({ recolorables: [], borderables: [] }),
-    mapToEditPanelValues: (config) => new Map()
-  });
-}
-
-// ==========================================
-// 3. Form Submission Handler (SweetAlert2)
-// ==========================================
-document.getElementById('contact-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  
-  const form = this;
-  const submitBtn = document.getElementById('submit-btn');
-  const originalBtnText = submitBtn.innerHTML;
-  
-  // Loading State
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = `
-    <svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-    </svg>
-    <span>جاري الإرسال...</span>
-  `;
-
-  const formData = new FormData(form);
-
-  try {
-    // 🔴 رابط الفورم الخاص بك
-    const response = await fetch("https://formspree.io/f/xnjzvqrk", {
-      method: "POST",
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
+    themeToggleBtn.addEventListener('click', () => {
+        isDarkMode = !isDarkMode;
+        if (isDarkMode) {
+            body.classList.remove('light-mode');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            body.classList.add('light-mode');
+            localStorage.setItem('theme', 'light');
+        }
+        toggleIcons();
     });
+}
 
-    if (response.ok) {
-      // ✅ نجاح (يتغير لونه حسب الثيم)
-      Swal.fire({
-        title: 'تم الإرسال بنجاح!',
-        text: 'شكراً لتواصلك معنا، سنرد عليك في أقرب وقت.',
-        icon: 'success',
-        background: isDarkMode ? '#0A1628' : '#ffffff',
-        color: isDarkMode ? '#ffffff' : '#111827',
-        confirmButtonText: 'تم',
-        confirmButtonColor: '#00C7F4',
-        backdrop: isDarkMode ? `rgba(5, 10, 31, 0.8)` : `rgba(0, 0, 0, 0.4)`
-      });
-      
-      form.reset();
-      
+function toggleIcons() {
+    if (isDarkMode) {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
     } else {
-      // ❌ خطأ
-      Swal.fire({
-        title: 'عذراً!',
-        text: 'حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى.',
-        icon: 'error',
-        background: isDarkMode ? '#0A1628' : '#ffffff',
-        color: isDarkMode ? '#ffffff' : '#111827',
-        confirmButtonText: 'حسناً',
-        confirmButtonColor: '#2E00E6'
-      });
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
     }
-  } catch (error) {
-    // ⚠️ شبكة
-    Swal.fire({
-      title: 'تنبيه',
-      text: 'يرجى التأكد من اتصالك بالإنترنت.',
-      icon: 'warning',
-      background: isDarkMode ? '#0A1628' : '#ffffff',
-      color: isDarkMode ? '#ffffff' : '#111827',
-      confirmButtonText: 'حسناً',
-      confirmButtonColor: '#2E00E6'
+}
+
+// ==========================================
+// 3. جلب المشاريع (Portfolio)
+// ==========================================
+async function loadProjects() {
+    const container = document.getElementById('portfolio-container');
+    
+    // مؤشر التحميل
+    container.innerHTML = `
+        <div style="grid-column: span 2; text-align: center; padding: 40px; color: gray;">
+          <span class="animate-pulse">جاري تحميل المعرض...</span>
+        </div>
+    `;
+    
+    try {
+        const querySnapshot = await getDocs(collection(db, "projects"));
+        
+        container.innerHTML = ''; // تنظيف الحاوية
+
+        let projects = [];
+        querySnapshot.forEach((doc) => {
+            projects.push(doc.data());
+        });
+        
+        if (projects.length === 0) {
+            container.innerHTML = '<p style="text-align: center; grid-column: span 2; padding: 20px; color: #6b7280;">لا توجد مشاريع مضافة حالياً.</p>';
+            return;
+        }
+        
+        projects.forEach((project) => {
+            const imageSrc = project.image || 'https://placehold.co/400x300/0A1628/00C7F4?text=Project';
+            
+            container.innerHTML += `
+            <div class="portfolio-card card-glass rounded-2xl overflow-hidden group">
+              
+              <div class="portfolio-image-wrapper bg-gray-900 overflow-hidden">
+                <img src="${imageSrc}" alt="${project.title}" class="transition-transform duration-500 group-hover:scale-110">
+                <div class="portfolio-overlay absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent opacity-0 transition-opacity duration-300 flex items-end p-6">
+                  <div>
+                    <span class="text-cyan-400 text-sm font-medium">${project.category || 'مشروع'}</span>
+                    <h4 class="text-xl font-bold text-white">${project.title}</h4>
+                  </div>
+                </div>
+              </div>
+
+              <div class="portfolio-content">
+                <div>
+                    <h3 class="text-xl font-bold mb-2">${project.title}</h3>
+                    <p class="text-gray-400 text-sm line-clamp-3">${project.description || ''}</p>
+                </div>
+                
+                <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-gray-700/30">
+                    ${project.tech_stack ? project.tech_stack.map(tech => 
+                        `<span class="px-3 py-1 rounded-full text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30">${tech}</span>`
+                    ).join('') : ''}
+                </div>
+              </div>
+
+            </div>
+            `;
+        });
+
+    } catch (error) {
+        console.error("Error:", error);
+        container.innerHTML = '<p class="text-center col-span-2 text-red-400">حدث خطأ في الاتصال بقاعدة البيانات.</p>';
+    }
+}
+// استدعاء دالة التحميل عند فتح الصفحة
+document.addEventListener('DOMContentLoaded', loadProjects);
+
+
+// =======================================================
+// 4. ✅ حفظ الإيميلات في قاعدة البيانات (Contact Form)
+// =======================================================
+const contactForm = document.getElementById('contact-form');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault(); // منع تحديث الصفحة
+        
+        const submitBtn = document.getElementById('submit-btn');
+        const originalBtnText = submitBtn.innerHTML;
+        
+        // جلب البيانات من الحقول
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('project').value;
+
+        // تغيير حالة الزر للتحميل
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            جاري الإرسال...
+        `;
+
+        try {
+            // إضافة البيانات إلى مجموعة "messages" في فايربيس
+            await addDoc(collection(db, "messages"), {
+                name: name,
+                email: email,
+                message: message,
+                createdAt: serverTimestamp(), // توقيت السيرفر لترتيب الرسائل
+                status: 'new' // حالة مبدئية للرسالة
+            });
+
+            // ✅ رسالة نجاح
+            Swal.fire({
+                title: 'تم الإرسال بنجاح!',
+                text: 'وصلتنا رسالتك وسنتواصل معك قريباً.',
+                icon: 'success',
+                background: isDarkMode ? '#0A1628' : '#ffffff',
+                color: isDarkMode ? '#ffffff' : '#111827',
+                confirmButtonColor: '#00C7F4',
+                confirmButtonText: 'ممتاز'
+            });
+            
+            // تفريغ الحقول
+            contactForm.reset();
+            
+        } catch (error) {
+            console.error("Error adding message: ", error);
+            // ❌ رسالة خطأ
+            Swal.fire({
+                title: 'عذراً!',
+                text: 'حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.',
+                icon: 'error',
+                background: isDarkMode ? '#0A1628' : '#ffffff',
+                color: isDarkMode ? '#ffffff' : '#111827'
+            });
+        } finally {
+            // إعادة الزر لحالته الطبيعية
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+        }
     });
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalBtnText;
-  }
-});
+}
 
 // ==========================================
-// 4. Smooth Scroll & Navbar
+// 5. Navbar Scroll Effect
 // ==========================================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
-
-// Navbar Scroll Effect (يتغير حسب الثيم)
 window.addEventListener('scroll', () => {
   const nav = document.querySelector('nav');
-  const currentScroll = window.pageYOffset;
-  
-  if (currentScroll > 100) {
-    // إذا نزلنا، الخلفية تصبح صلبة (حسب الثيم)
+  if (window.scrollY > 100) {
     nav.style.background = isDarkMode ? 'rgba(5, 10, 31, 0.98)' : 'rgba(255, 255, 255, 0.95)';
     nav.style.boxShadow = '0 4px 30px rgba(0, 199, 244, 0.1)';
   } else {
-    // في الأعلى، الخلفية شفافة
     nav.style.background = isDarkMode ? 'rgba(5, 10, 31, 0.9)' : 'rgba(255, 255, 255, 0.8)';
     nav.style.boxShadow = 'none';
   }

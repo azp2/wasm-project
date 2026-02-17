@@ -10,7 +10,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
 </head>
@@ -19,21 +19,11 @@
   <div class="fixed inset-0 circuit-pattern pointer-events-none opacity-30"></div>
   
   <div class="fixed inset-0 pointer-events-none overflow-hidden">
-    <div class="absolute top-20 left-10 text-xs font-mono text-cyan-500 opacity-20 code-line" style="animation-delay: 0s;">
-      const wasm = new Vision();
-    </div>
-    <div class="absolute top-40 right-20 text-xs font-mono text-blue-500 opacity-20 code-line" style="animation-delay: 1s;">
-      await build.custom();
-    </div>
-    <div class="absolute top-60 left-1/4 text-xs font-mono text-cyan-500 opacity-20 code-line" style="animation-delay: 2s;">
-      export { excellence };
-    </div>
-    <div class="absolute bottom-40 right-1/3 text-xs font-mono text-blue-500 opacity-20 code-line" style="animation-delay: 1.5s;">
-      deploy(quality);
-    </div>
-    <div class="absolute bottom-20 left-20 text-xs font-mono text-cyan-500 opacity-20 code-line" style="animation-delay: 0.5s;">
-      return innovation;
-    </div>
+    <div class="absolute top-20 left-10 text-xs font-mono text-cyan-500 opacity-20 code-line">const wasm = new Vision();</div>
+    <div class="absolute top-40 right-20 text-xs font-mono text-blue-500 opacity-20 code-line">await build.custom();</div>
+    <div class="absolute top-60 left-1/4 text-xs font-mono text-cyan-500 opacity-20 code-line">export { excellence };</div>
+    <div class="absolute bottom-40 right-1/3 text-xs font-mono text-blue-500 opacity-20 code-line">deploy(quality);</div>
+    <div class="absolute bottom-20 left-20 text-xs font-mono text-cyan-500 opacity-20 code-line">return innovation;</div>
   </div>
 
   <nav class="fixed top-0 left-0 right-0 z-50 bg-opacity-90 backdrop-blur-md" style="background: rgba(5, 10, 31, 0.9);">
@@ -46,18 +36,22 @@
           </div>
           <div class="flex flex-col z-40">
             <span class="text-3xl font-bold bg-gradient-to-l from-cyan-400 to-blue-600 bg-clip-text text-transparent">Wasm</span> 
-            <span class="text-xs text-cyan-400 opacity-80">وسم.. كودٌ يُرى</span>
+            <span class="text-xs text-cyan-400 opacity-80" data-i18n="nav_slogan">وسم.. كودٌ يُرى</span>
           </div>
         </div>
 
         <div class="hidden md:flex items-center gap-8">
-          <a href="#home" class="nav-link text-white hover:text-cyan-400">الرئيسية</a> 
-          <a href="#about" class="nav-link text-white hover:text-cyan-400">من نحن</a> 
-          <a href="#services" class="nav-link text-white hover:text-cyan-400">خدماتنا</a> 
-          <a href="#portfolio" class="nav-link text-white hover:text-cyan-400">أعمالنا</a> 
-          <a href="#contact" class="nav-link text-white hover:text-cyan-400">تواصل معنا</a>
+          <a href="#home" class="nav-link text-white hover:text-cyan-400" data-i18n="nav_home">الرئيسية</a> 
+          <a href="#about" class="nav-link text-white hover:text-cyan-400" data-i18n="nav_about">من نحن</a> 
+          <a href="#services" class="nav-link text-white hover:text-cyan-400" data-i18n="nav_services">خدماتنا</a> 
+          <a href="#portfolio" class="nav-link text-white hover:text-cyan-400" data-i18n="nav_portfolio">أعمالنا</a> 
+          <a href="#contact" class="nav-link text-white hover:text-cyan-400" data-i18n="nav_contact">تواصل معنا</a>
         </div>
+        
         <div class="flex items-center gap-3">
+          <button id="lang-toggle" class="px-3 py-1 rounded-lg border border-gray-600 text-sm font-bold hover:border-cyan-400 hover:text-cyan-400 transition">
+            EN
+          </button>
 
           <button id="theme-toggle" class="p-2 rounded-full hover:bg-white/10 transition-colors border border-transparent hover:border-white/20" aria-label="Toggle Theme">
             <svg id="sun-icon" class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,10 +62,9 @@
             </svg>
           </button>
         
-          <a href="#contact" class="px-6 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-105">
+          <a href="#contact" class="hidden md:inline-block px-6 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-105" data-i18n="btn_start">
             ابدأ الآن
           </a>
-
         </div>
         
       </div>
@@ -79,71 +72,26 @@
   </nav>
 
   <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none">
-      <svg class="absolute w-full h-full" viewbox="0 0 1200 800" preserveaspectratio="xMidYMid slice">
-        <defs>
-          <lineargradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#2E00E6;stop-opacity:0" />
-            <stop offset="50%" style="stop-color:#00C7F4;stop-opacity:0.6" />
-            <stop offset="100%" style="stop-color:#2E00E6;stop-opacity:0" />
-          </lineargradient>
-          <lineargradient id="lineGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#00C7F4;stop-opacity:0" />
-            <stop offset="50%" style="stop-color:#2E00E6;stop-opacity:0.6" />
-            <stop offset="100%" style="stop-color:#00C7F4;stop-opacity:0" />
-          </lineargradient>
-        </defs> 
-        <g class="pulse-glow">
-          <path d="M0,200 Q300,180 600,200 T1200,200" stroke="url(#lineGrad1)" fill="none" stroke-width="1" />
-          <path d="M0,400 Q300,420 600,400 T1200,400" stroke="url(#lineGrad2)" fill="none" stroke-width="1" />
-          <path d="M0,600 Q300,580 600,600 T1200,600" stroke="url(#lineGrad1)" fill="none" stroke-width="1" />
-        </g> 
-        <circle cx="300" cy="200" r="6" fill="#00C7F4" class="pulse-glow" /> 
-        <circle cx="600" cy="400" r="8" fill="#2E00E6" class="pulse-glow" style="animation-delay: 0.5s;" /> 
-        <circle cx="900" cy="200" r="5" fill="#00C7F4" class="pulse-glow" style="animation-delay: 1s;" /> 
-        <circle cx="450" cy="600" r="7" fill="#2E00E6" class="pulse-glow" style="animation-delay: 1.5s;" /> 
-        <circle cx="750" cy="600" r="6" fill="#00C7F4" class="pulse-glow" style="animation-delay: 2s;" /> 
-        <line x1="300" y1="200" x2="600" y2="400" stroke="#00C7F4" stroke-width="0.5" opacity="0.3" /> 
-        <line x1="600" y1="400" x2="900" y2="200" stroke="#2E00E6" stroke-width="0.5" opacity="0.3" /> 
-        <line x1="600" y1="400" x2="450" y2="600" stroke="#00C7F4" stroke-width="0.5" opacity="0.3" /> 
-        <line x1="600" y1="400" x2="750" y2="600" stroke="#2E00E6" stroke-width="0.5" opacity="0.3" />
-      </svg>
-    </div>
+    <div class="absolute inset-0 pointer-events-none"><svg class="absolute w-full h-full" viewbox="0 0 1200 800" preserveaspectratio="xMidYMid slice"><defs><lineargradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#2E00E6;stop-opacity:0" /><stop offset="50%" style="stop-color:#00C7F4;stop-opacity:0.6" /><stop offset="100%" style="stop-color:#2E00E6;stop-opacity:0" /></lineargradient><lineargradient id="lineGrad2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#00C7F4;stop-opacity:0" /><stop offset="50%" style="stop-color:#2E00E6;stop-opacity:0.6" /><stop offset="100%" style="stop-color:#00C7F4;stop-opacity:0" /></lineargradient></defs><g class="pulse-glow"><path d="M0,200 Q300,180 600,200 T1200,200" stroke="url(#lineGrad1)" fill="none" stroke-width="1" /><path d="M0,400 Q300,420 600,400 T1200,400" stroke="url(#lineGrad2)" fill="none" stroke-width="1" /><path d="M0,600 Q300,580 600,600 T1200,600" stroke="url(#lineGrad1)" fill="none" stroke-width="1" /></g></svg></div>
+    
     <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
-      <div class="mb-6">
-        <span class="inline-block px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-900/50 to-cyan-900/50 border border-cyan-500/30 text-cyan-400"> </span>
-      </div>
       <h1 id="hero-title" class="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-        <span class="bg-gradient-to-l from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent text-glow-turquoise"> نبرمج رؤيتك، </span> <br><span class="text-white">نصمم واقعك الرقمي</span>
+        <span class="bg-gradient-to-l from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent text-glow-turquoise" data-i18n="hero_line1"> نبرمج رؤيتك، </span> <br><span class="text-white" data-i18n="hero_line2">نصمم واقعك الرقمي</span>
       </h1>
       <p id="hero-subtitle" class="text-lg md:text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-        حلول برمجية وتصاميم مخصصة تُبنى من الصفر، بلا قوالب جاهزة. <br class="hidden md:block"><span class="text-cyan-400">جودة وكفاءة لا تُضاهى.</span>
+        <span data-i18n="hero_desc">حلول برمجية وتصاميم مخصصة تُبنى من الصفر، بلا قوالب جاهزة.</span> <br class="hidden md:block"><span class="text-cyan-400" data-i18n="hero_highlight">جودة وكفاءة لا تُضاهى.</span>
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a href="#contact" class="btn-primary px-10 py-4 rounded-full text-white font-bold text-lg glow-blue"> ابدأ مشروعك الآن <span class="mr-2">←</span> </a> 
-        <a href="#about" class="btn-secondary px-10 py-4 rounded-full font-bold text-lg"> تعرف علينا </a>
+        <a href="#contact" class="btn-primary px-10 py-4 rounded-full text-white font-bold text-lg glow-blue flex items-center gap-2"> 
+          <span data-i18n="btn_hero_start">ابدأ مشروعك الآن</span> <span class="transform transition-transform group-hover:translate-x-1 rtl:rotate-180">→</span> 
+        </a> 
+        <a href="#about" class="btn-secondary px-10 py-4 rounded-full font-bold text-lg" data-i18n="btn_hero_about"> تعرف علينا </a>
       </div>
+      
       <div class="mt-16 flex justify-center items-center gap-8 opacity-60">
-        <div class="flex flex-col items-center gap-2">
-          <svg class="w-10 h-10 text-cyan-400" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>
-          <span class="text-xs text-gray-500">React</span>
-        </div>
-        <div class="flex flex-col items-center gap-2">
-          <svg class="w-10 h-10 text-blue-500" viewbox="0 0 24 24" fill="currentColor"><path d="M3 3h18v18H3V3zm16.525 13.707c-.131-.821-.666-1.511-2.252-2.155-.552-.259-.571-.51-.555-.749.033-.39.459-.5.782-.395.317.103.605.371.786.734.925-.539.925-.539 1.554-.893-.243-.383-.39-.554-.56-.728-.603-.598-1.418-.903-2.724-.903l-.671.077c-.642.164-1.256.531-1.607.972-.891 1.082-.639 2.965.713 3.744 1.375.735 3.385.889 3.632 1.57.266.722-.375 1.148-1.346 1.073-.771-.059-1.205-.42-1.668-1.049-.9.523-.9.523-1.5.871.219.426.467.619.823.984 1.524 1.535 5.332 1.456 6.014-1.104.025-.074.209-.594-.087-1.556l.002.003zM9.974 11.551v2.313h2.892c-.138 1.271-.607 2.113-1.271 2.737-.8.743-2.045 1.558-3.621 1.558-2.892 0-5.146-2.326-5.146-5.206 0-2.876 2.254-5.203 5.146-5.203 1.551 0 2.685.613 3.521 1.412l1.595-1.592C11.752 6.231 10.163 5.5 8 5.5 3.58 5.5 0 8.983 0 13.333S3.58 21.166 8 21.166c2.347 0 4.115-.762 5.5-2.189 1.415-1.415 1.862-3.398 1.862-5.003 0-.497-.043-.947-.111-1.318H9.974v-.105z" /></svg>
-          <span class="text-xs text-gray-500">Node.js</span>
-        </div>
-        <div class="flex flex-col items-center gap-2">
-          <svg class="w-10 h-10 text-purple-500" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>
-          <span class="text-xs text-gray-500">TypeScript</span>
-        </div>
-        <div class="flex flex-col items-center gap-2">
-          <svg class="w-10 h-10 text-green-500" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>
-          <span class="text-xs text-gray-500">MongoDB</span>
-        </div>
+         <div class="flex flex-col items-center gap-2"><svg class="w-10 h-10 text-cyan-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span class="text-xs text-gray-500">React</span></div>
+         <div class="flex flex-col items-center gap-2"><svg class="w-10 h-10 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h18v18H3V3zm16.5 13.7c-.1-.8-.7-1.5-2.3-2.2-.6-.3-.6-.5-.6-.7.1-.4.5-.5.8-.4.3.1.6.4.8.7.9-.5 1.6-.9.2-.4-.4-.6-.7.6-.6 1.4-.9 2.7-.9l-.7.1c-.6.2-1.3.5-1.6 1-.9 1.1-.6 3 .7 3.7.7.9 3.6 1.6.7.4 1.1 1.3 1.1-.1 1.2-.4 1.7-1 .9-.5-.9-1.5-.9.2.4.5.6.8 1 1.5 1.5 5.3 1.5 6 1.1 0 .1.2.6-.1 1.6zM10 11.6v2.3h2.9c-.1 1.3-.6 2.1-1.3 2.7-.7.7-2 1.6-3.6 1.6-2.9 0-5.1-2.3-5.1-5.2 0-2.9 2.3-5.2 5.1-5.2 1.6 0 2.7.6 3.5 1.4l1.6-1.6C11.8 6.2 10.2 5.5 8 5.5 3.6 5.5 0 9 0 13.3S3.6 21.2 8 21.2c2.3 0 4.1-.8 5.5-2.2 1.4-1.4 1.9-3.4 1.9-5 0-.5 0-.9-.1-1.3H10v-.1z"/></svg><span class="text-xs text-gray-500">Node.js</span></div>
       </div>
-    </div>
-    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-      <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
     </div>
   </section>
 
@@ -151,33 +99,34 @@
     <div class="max-w-6xl mx-auto px-6">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div>
-          <span class="text-cyan-400 font-medium mb-4 block">من نحن</span>
-          <h2 id="about-title" class="text-4xl md:text-5xl font-black mb-6">نحن <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent">وسم</span>.. <br> مهندسو الأثر الرقمي</h2>
-          <p class="text-gray-300 text-lg leading-relaxed mb-6">لسنا مجرد فريق من المستقلين، بل نحن <span class="text-cyan-400 font-semibold">بيت رقمي متكامل</span> مخصص لصناعة كود عالي الجودة وتجارب مستخدم فريدة تُبرز علامتك التجارية.</p>
-          <p class="text-gray-400 leading-relaxed mb-8">نؤمن بأن كل مشروع يستحق حلاً مخصصاً. لا نستخدم القوالب الجاهزة، بل نبني كل سطر برمجي من الصفر ليناسب احتياجاتك الفريدة ويحقق أهدافك التجارية.</p>
+          <span class="text-cyan-400 font-medium mb-4 block" data-i18n="about_label">من نحن</span>
+          <h2 class="text-4xl md:text-5xl font-black mb-6">
+            <span data-i18n="about_head_1">نحن</span> 
+            <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent">Wasm</span>.. <br> 
+            <span data-i18n="about_head_2">مهندسو الأثر الرقمي</span>
+          </h2>
+          <p class="text-gray-300 text-lg leading-relaxed mb-6" data-i18n="about_desc_1">لسنا مجرد فريق من المستقلين، بل نحن بيت رقمي متكامل مخصص لصناعة كود عالي الجودة وتجارب مستخدم فريدة تُبرز علامتك التجارية.</p>
+          <p class="text-gray-400 leading-relaxed mb-8" data-i18n="about_desc_2">نؤمن بأن كل مشروع يستحق حلاً مخصصاً. لا نستخدم القوالب الجاهزة، بل نبني كل سطر برمجي من الصفر ليناسب احتياجاتك الفريدة.</p>
+          
           <div class="grid grid-cols-3 gap-6">
             <div class="text-center">
               <div class="text-3xl font-black text-cyan-400">+50</div>
-              <div class="text-sm text-gray-500">مشروع منجز</div>
+              <div class="text-sm text-gray-500" data-i18n="stat_projects">مشروع منجز</div>
             </div>
             <div class="text-center">
               <div class="text-3xl font-black text-blue-500">+30</div>
-              <div class="text-sm text-gray-500">عميل سعيد</div>
+              <div class="text-sm text-gray-500" data-i18n="stat_clients">عميل سعيد</div>
             </div>
             <div class="text-center">
               <div class="text-3xl font-black text-purple-500">100%</div>
-              <div class="text-sm text-gray-500">كود أصلي</div>
+              <div class="text-sm text-gray-500" data-i18n="stat_code">كود أصلي</div>
             </div>
           </div>
         </div>
+        
         <div class="relative">
-          <div class="card-glass rounded-3xl p-8 relative overflow-hidden">
+          <div class="card-glass rounded-3xl p-8 relative overflow-hidden" dir="ltr">
             <div class="bg-gray-900/50 rounded-xl p-6 font-mono text-sm">
-              <div class="flex items-center gap-2 mb-4">
-                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div class="w-3 h-3 rounded-full bg-green-500"></div>
-              </div>
               <code class="text-gray-300"> 
                 <span class="text-purple-400">const</span> <span class="text-cyan-400">wasm</span> = {<br>
                 &nbsp;&nbsp;<span class="text-green-400">quality</span>: <span class="text-yellow-400">"exceptional"</span>,<br>
@@ -187,8 +136,6 @@
                 }; 
               </code>
             </div>
-            <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-full blur-2xl"></div>
-            <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-2xl"></div>
           </div>
         </div>
       </div>
@@ -198,35 +145,36 @@
   <section id="services" class="py-24 relative">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
-        <span class="text-cyan-400 font-medium mb-4 block">خدماتنا</span>
-        <h2 class="text-4xl md:text-5xl font-black">ماذا <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent">نقدم؟</span></h2>
+        <span class="text-cyan-400 font-medium mb-4 block" data-i18n="services_label">خدماتنا</span>
+        <h2 class="text-4xl md:text-5xl font-black"><span data-i18n="services_head_1">ماذا</span> <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent" data-i18n="services_head_2">نقدم؟</span></h2>
       </div>
       <div class="grid md:grid-cols-3 gap-8">
+        
         <div class="service-card card-glass rounded-2xl p-8 text-center">
           <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center">
             <svg class="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
           </div>
-          <h3 class="text-2xl font-bold mb-4">تصميم تجربة المستخدم</h3>
-          <p class="text-gray-400">واجهات احترافية تجمع بين الجمال والسهولة، مصممة لتعزيز تفاعل المستخدمين مع منتجك.</p>
-          <div class="mt-6 pt-6 border-t border-gray-700/50"><span class="text-cyan-400 font-medium">UI/UX Design</span></div>
+          <h3 class="text-2xl font-bold mb-4" data-i18n="srv_ui_title">تصميم تجربة المستخدم</h3>
+          <p class="text-gray-400" data-i18n="srv_ui_desc">واجهات احترافية تجمع بين الجمال والسهولة، مصممة لتعزيز تفاعل المستخدمين مع منتجك.</p>
         </div>
+
         <div class="service-card card-glass rounded-2xl p-8 text-center transform md:-translate-y-4">
-          <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full text-xs font-bold">الأكثر طلباً</div>
+          <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full text-xs font-bold" data-i18n="srv_popular">الأكثر طلباً</div>
           <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
             <svg class="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
           </div>
-          <h3 class="text-2xl font-bold mb-4">تطوير الويب والتطبيقات</h3>
-          <p class="text-gray-400">أنظمة قوية، سريعة، وآمنة مبنية خصيصاً لك باستخدام أحدث التقنيات وأفضل الممارسات.</p>
-          <div class="mt-6 pt-6 border-t border-gray-700/50"><span class="text-blue-400 font-medium">Web &amp; App Development</span></div>
+          <h3 class="text-2xl font-bold mb-4" data-i18n="srv_dev_title">تطوير الويب والتطبيقات</h3>
+          <p class="text-gray-400" data-i18n="srv_dev_desc">أنظمة قوية، سريعة، وآمنة مبنية خصيصاً لك باستخدام أحدث التقنيات وأفضل الممارسات.</p>
         </div>
+
         <div class="service-card card-glass rounded-2xl p-8 text-center">
           <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
             <svg class="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
           </div>
-          <h3 class="text-2xl font-bold mb-4">حلول التجارة الإلكترونية</h3>
-          <p class="text-gray-400">متاجر متكاملة مصممة لزيادة مبيعاتك مع تجربة شراء سلسة وآمنة لعملائك.</p>
-          <div class="mt-6 pt-6 border-t border-gray-700/50"><span class="text-purple-400 font-medium">E-commerce Solutions</span></div>
+          <h3 class="text-2xl font-bold mb-4" data-i18n="srv_ecom_title">حلول التجارة الإلكترونية</h3>
+          <p class="text-gray-400" data-i18n="srv_ecom_desc">متاجر متكاملة مصممة لزيادة مبيعاتك مع تجربة شراء سلسة وآمنة لعملائك.</p>
         </div>
+
       </div>
     </div>
   </section>
@@ -237,45 +185,30 @@
         <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-cyan-500/10"></div>
         <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <span class="text-cyan-400 font-medium mb-4 block">المميزات</span>
-            <h2 class="text-4xl md:text-5xl font-black mb-6">لماذا <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent">نحن؟</span></h2>
-            <p class="text-gray-400 text-lg">نجمع بين الخبرة التقنية والإبداع لنقدم لك حلولاً استثنائية تتجاوز توقعاتك.</p>
+            <span class="text-cyan-400 font-medium mb-4 block" data-i18n="feat_label">المميزات</span>
+            <h2 class="text-4xl md:text-5xl font-black mb-6"><span data-i18n="feat_head_1">لماذا</span> <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent" data-i18n="feat_head_2">نحن؟</span></h2>
+            <p class="text-gray-400 text-lg" data-i18n="feat_desc">نجمع بين الخبرة التقنية والإبداع لنقدم لك حلولاً استثنائية تتجاوز توقعاتك.</p>
           </div>
           <div class="space-y-6">
             <div class="flex items-start gap-4">
-              <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1">
-                <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-              </div>
+              <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg></div>
               <div>
-                <h4 class="text-xl font-bold mb-1">كود أصلي ونظيف</h4>
-                <p class="text-gray-400">نكتب كل سطر برمجي بعناية فائقة، مما يضمن أداءً عالياً وصيانة سهلة.</p>
+                <h4 class="text-xl font-bold mb-1" data-i18n="feat_1_title">كود أصلي ونظيف</h4>
+                <p class="text-gray-400" data-i18n="feat_1_desc">نكتب كل سطر برمجي بعناية فائقة، مما يضمن أداءً عالياً.</p>
               </div>
             </div>
             <div class="flex items-start gap-4">
-              <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1">
-                <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-              </div>
+              <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg></div>
               <div>
-                <h4 class="text-xl font-bold mb-1">تصميم فريد غير مكرر</h4>
-                <p class="text-gray-400">كل مشروع يحصل على هوية بصرية فريدة تعكس شخصية علامتك التجارية.</p>
+                <h4 class="text-xl font-bold mb-1" data-i18n="feat_2_title">تصميم فريد غير مكرر</h4>
+                <p class="text-gray-400" data-i18n="feat_2_desc">كل مشروع يحصل على هوية بصرية فريدة تعكس شخصية علامتك التجارية.</p>
               </div>
             </div>
             <div class="flex items-start gap-4">
-              <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1">
-                <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-              </div>
+              <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg></div>
               <div>
-                <h4 class="text-xl font-bold mb-1">فريق متخصص ومحترف</h4>
-                <p class="text-gray-400">خبراء في مختلف المجالات التقنية يعملون معاً لتحقيق نتائج استثنائية.</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1">
-                <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-              </div>
-              <div>
-                <h4 class="text-xl font-bold mb-1">التزام بالمواعيد والجودة</h4>
-                <p class="text-gray-400">نلتزم بتسليم المشاريع في الوقت المحدد دون التنازل عن معايير الجودة.</p>
+                <h4 class="text-xl font-bold mb-1" data-i18n="feat_3_title">فريق متخصص</h4>
+                <p class="text-gray-400" data-i18n="feat_3_desc">خبراء في مختلف المجالات التقنية يعملون معاً لتحقيق نتائج استثنائية.</p>
               </div>
             </div>
           </div>
@@ -286,55 +219,48 @@
 
   <section id="portfolio" class="py-24 relative">
     <div class="max-w-6xl mx-auto px-6">
-      
       <div class="text-center mb-16">
-        <span class="text-cyan-400 font-medium mb-4 block">معرض الأعمال</span>
-        <h2 class="text-4xl md:text-5xl font-black">بعض من <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent">أعمالنا</span></h2>
+        <span class="text-cyan-400 font-medium mb-4 block" data-i18n="portfolio_label">معرض الأعمال</span>
+        <h2 class="text-4xl md:text-5xl font-black"><span data-i18n="portfolio_head_1">بعض من</span> <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent" data-i18n="portfolio_head_2">أعمالنا</span></h2>
       </div>
-
       <div id="portfolio-container" class="grid md:grid-cols-2 gap-8">
         <div class="col-span-2 text-center text-gray-400 py-12">
             <svg class="animate-spin h-8 w-8 text-cyan-500 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            جاري تحميل الأعمال...
+            <span data-i18n="loading_projects">جاري تحميل الأعمال...</span>
         </div>
       </div>
-
     </div>
   </section>
 
   <section id="contact" class="py-24 relative">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
-        <span class="text-cyan-400 font-medium mb-4 block">تواصل معنا</span>
-        <h2 class="text-4xl md:text-5xl font-black">لنبدأ <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent">الرحلة</span></h2>
-        <p class="text-gray-400 mt-4 max-w-2xl mx-auto">أخبرنا عن مشروعك وسنتواصل معك خلال 24 ساعة لمناقشة كيف يمكننا مساعدتك في تحقيق رؤيتك.</p>
+        <span class="text-cyan-400 font-medium mb-4 block" data-i18n="contact_label">تواصل معنا</span>
+        <h2 class="text-4xl md:text-5xl font-black"><span data-i18n="contact_head_1">لنبدأ</span> <span class="bg-gradient-to-l from-cyan-400 to-blue-500 bg-clip-text text-transparent" data-i18n="contact_head_2">الرحلة</span></h2>
+        <p class="text-gray-400 mt-4 max-w-2xl mx-auto" data-i18n="contact_desc">أخبرنا عن مشروعك وسنتواصل معك خلال 24 ساعة.</p>
       </div>
       <div class="grid md:grid-cols-2 gap-12">
         <div class="card-glass rounded-2xl p-8">
           <form id="contact-form" class="space-y-6">
             <div>
-              <label for="name" class="block text-sm font-medium text-gray-300 mb-2">الاسم الكامل</label> 
-              <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors" placeholder="محمد أحمد">
+              <label for="name" class="block text-sm font-medium text-gray-300 mb-2" data-i18n="form_name">الاسم الكامل</label> 
+              <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors" data-placeholder="name_placeholder">
             </div>
             <div>
-              <label for="email" class="block text-sm font-medium text-gray-300 mb-2">البريد الإلكتروني</label> 
-              <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors" placeholder="example@email.com">
+              <label for="email" class="block text-sm font-medium text-gray-300 mb-2" data-i18n="form_email">البريد الإلكتروني</label> 
+              <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors" data-placeholder="email_placeholder">
             </div>
             <div>
-              <label for="project" class="block text-sm font-medium text-gray-300 mb-2">تفاصيل المشروع</label> 
-              <textarea id="project" name="project" rows="4" required class="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors resize-none" placeholder="أخبرنا عن فكرة مشروعك..."></textarea>
+              <label for="project" class="block text-sm font-medium text-gray-300 mb-2" data-i18n="form_message">تفاصيل المشروع</label> 
+              <textarea id="project" name="project" rows="4" required class="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors resize-none" data-placeholder="message_placeholder"></textarea>
             </div>
             <button type="submit" id="submit-btn" class="w-full btn-primary py-4 rounded-xl text-white font-bold text-lg glow-blue flex items-center justify-center gap-2"> 
-              <span>إرسال الرسالة</span>
-              <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7-7m7-7H3" /></svg>
+              <span data-i18n="btn_send">إرسال الرسالة</span>
+              <svg class="w-5 h-5 rotate-180 rtl:rotate-180 ltr:rotate-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
             </button> 
-            <div id="success-message" class="hidden text-center p-4 rounded-xl bg-green-500/20 border border-green-500/50">
-              <svg class="w-12 h-12 text-green-400 mx-auto mb-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              <p class="text-green-400 font-medium">تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.</p>
-            </div>
           </form>
         </div>
         <div class="space-y-8">
@@ -343,8 +269,8 @@
               <svg class="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
             </div>
             <div>
-              <h4 class="font-bold text-lg">البريد الإلكتروني</h4>
-              <p id="contact-email" class="text-cyan-400">wasm.tech.sa@gmail.com</p>
+              <h4 class="font-bold text-lg" data-i18n="contact_email_label">البريد الإلكتروني</h4>
+              <p class="text-cyan-400">wasm.tech.sa@gmail.com</p>
             </div>
           </div>
           <div class="card-glass rounded-2xl p-6 flex items-center gap-4">
@@ -352,32 +278,16 @@
               <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
             </div>
             <div>
-              <h4 class="font-bold text-lg">الهاتف</h4>
-                <p class="text-blue-400 text-right" dir="ltr">+966 53 082 7011</p>
-            </div>
-          </div>
-          <div class="card-glass rounded-2xl p-6">
-            <h4 class="font-bold text-lg mb-4">تابعنا على</h4>
-            <div class="flex gap-4">
-              <a href="https://tiktok.com/@wasm.tech" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-xl bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors group">
-                <svg class="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 22a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.04z"/>
-                </svg> 
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-xl bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors group">
-                <svg class="w-6 h-6 text-gray-400 group-hover:text-cyan-400 transition-colors" fill="currentColor" viewbox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" /></svg>
-              </a> 
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-xl bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors group">
-                <svg class="w-6 h-6 text-gray-400 group-hover:text-blue-400 transition-colors" fill="currentColor" viewbox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
-              </a>
-              
+              <h4 class="font-bold text-lg" data-i18n="contact_phone_label">الهاتف</h4>
+              <p class="text-blue-400" dir="ltr">+966 53 082 7011</p>
             </div>
           </div>
           <div class="card-glass rounded-2xl p-6 bg-gradient-to-br from-cyan-500/10 to-blue-500/10">
             <div class="flex items-center gap-3 mb-3">
               <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-              <span class="font-bold">استجابة سريعة</span>
+              <span class="font-bold" data-i18n="quick_response">استجابة سريعة</span>
             </div>
-            <p class="text-gray-400 text-sm">نرد على جميع الاستفسارات خلال 24 ساعة عمل كحد أقصى.</p>
+            <p class="text-gray-400 text-sm" data-i18n="quick_response_desc">نرد على جميع الاستفسارات خلال 24 ساعة عمل كحد أقصى.</p>
           </div>
         </div>
       </div>
@@ -391,12 +301,12 @@
            <img src="image/wasm.png" alt="Wasm Logo" class="w-32 h-32 object-contain">
           <div>
             <span class="text-xl font-bold"></span> 
-            <span class="text-gray-500 text-sm block">وسم.. كودٌ يُرى</span>
+            <span class="text-gray-500 text-sm block" data-i18n="footer_slogan">وسم.. كودٌ يُرى</span>
           </div>
         </div>
-        <p class="text-gray-500 text-sm">© 2024 Wasm. جميع الحقوق محفوظة.</p>
+        <p class="text-gray-500 text-sm" data-i18n="footer_rights">© 2024 Wasm. جميع الحقوق محفوظة.</p>
         <a href="#home" class="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"> 
-          <span>العودة للأعلى</span>
+          <span data-i18n="back_to_top">العودة للأعلى</span>
           <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
         </a>
       </div>

@@ -296,3 +296,24 @@ body.light-mode a[href*="twitter"] svg,
 body.light-mode a[href*="linkedin"] svg {
     color: #ffffff !important;
 }
+
+/* =========================================
+   إعدادات الخطوط حسب اللغة
+   ========================================= */
+
+/* العربية (الافتراضي) */
+body {
+    font-family: 'Tajawal', sans-serif;
+}
+
+/* الإنجليزية */
+html[lang="en"] body {
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+html[lang="en"] h1, 
+html[lang="en"] h2, 
+html[lang="en"] h3 {
+    font-weight: 800; /* تعويض سماكة خط تجوال */
+}
